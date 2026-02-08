@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>For My Anant Jaan</title>
+    <title>For My Jaanu Badmas</title>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;600&display=swap');
@@ -15,7 +15,6 @@
             color: white;
         }
 
-        /* Starry Night Effect */
         #canvas-stars { position: fixed; top: 0; left: 0; z-index: 1; }
 
         .unlock-screen {
@@ -23,10 +22,11 @@
             display: flex; flex-direction: column; align-items: center; justify-content: center;
             background: radial-gradient(circle, #1a0a1a 0%, #050505 100%);
             transition: opacity 1s ease;
+            cursor: pointer;
         }
 
         .heart-lock {
-            font-size: 80px; cursor: pointer; animation: heartbeat 1.2s infinite;
+            font-size: 80px; animation: heartbeat 1.2s infinite;
             filter: drop-shadow(0 0 20px #ff4d6d);
         }
 
@@ -53,7 +53,7 @@
 
         .mustang-drive {
             position: absolute; bottom: 5vh; left: -200px; width: 120px;
-            z-index: 3; transition: left 8s linear;
+            z-index: 3; transition: left 6s linear; /* Faster drive */
         }
 
         .message-box {
@@ -82,8 +82,6 @@
             border-radius: 50px; cursor: pointer; font-weight: bold;
             box-shadow: 0 0 20px #ff4d6d; transition: 0.3s;
         }
-
-        .btn-yes:hover { transform: scale(1.1); box-shadow: 0 0 40px #ff4d6d; }
     </style>
 </head>
 <body>
@@ -94,89 +92,3 @@
         <div class="heart-lock">❤️</div>
         <p style="margin-top: 20px; letter-spacing: 3px;">TAP TO UNLOCK MY HEART</p>
     </div>
-
-    <div class="main-content" id="mainContent">
-        <div class="himalaya-silhouette"></div>
-        <img src="https://img.icons8.com/color/96/ford-mustang.png" class="mustang-drive" id="mustang">
-
-        <div class="message-box" id="msgBox">
-            <h2>Prisha, Meri Maalkin...</h2>
-            <p>
-                Meri jaan tu meri zindagi mera pyaar mera dil hai tu, humesha im there for you standing with you all the time and supporting you no matter what.<br><br>
-                Mera pyaar humeshaaa tere paas hai and youre my valentine for life my love for life for every janam...
-            </p>
-            <div class="final-question">
-                WILL YOU BE MY MAALKING FOR EVERYYYYY JANAM?
-            </div>
-            <button class="btn-yes" onclick="celebrate()">YES, FOREVER! ❤️</button>
-        </div>
-    </div>
-
-    <script>
-        const canvas = document.getElementById('canvas-stars');
-        const ctx = canvas.getContext('2d');
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-
-        const stars = Array.from({ length: 200 }, () => ({
-            x: Math.random() * canvas.width,
-            y: Math.random() * canvas.height,
-            size: Math.random() * 2,
-            speed: Math.random() * 0.5
-        }));
-
-        function drawStars() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = "white";
-            stars.forEach(s => {
-                ctx.beginPath();
-                ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
-                ctx.fill();
-                s.y -= s.speed;
-                if (s.y < 0) s.y = canvas.height;
-            });
-            requestAnimationFrame(drawStars);
-        }
-        drawStars();
-
-        function startExperience() {
-            document.getElementById('unlockScreen').style.opacity = '0';
-            setTimeout(() => {
-                document.getElementById('unlockScreen').style.display = 'none';
-                document.getElementById('mainContent').style.display = 'flex';
-                
-                // Start Mustang
-                setTimeout(() => {
-                    document.getElementById('mustang').style.left = '110%';
-                }, 500);
-
-                // Show Message
-                setTimeout(() => {
-                    document.getElementById('msgBox').classList.add('show');
-                }, 2000);
-            }, 1000);
-        }
-
-        function celebrate() {
-            const duration = 15 * 1000;
-            const animationEnd = Date.now() + duration;
-            const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
-
-            function randomInRange(min, max) { return Math.random() * (max - min) + min; }
-
-            const interval = setInterval(function() {
-                const timeLeft = animationEnd - Date.now();
-                if (timeLeft <= 0) return clearInterval(interval);
-
-                const particleCount = 50 * (timeLeft / duration);
-                confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } }));
-                confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } }));
-            }, 250);
-
-            document.querySelector('h2').innerText = "Vada Raha, Prisha! ❤️";
-            document.querySelector('.final-question').innerText = "I AM YOURS FOREVER. 💍";
-            document.querySelector('.btn-yes').style.display = 'none';
-        }
-    </script>
-</body>
-</html>
