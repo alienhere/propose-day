@@ -15,10 +15,12 @@
             color: white;
         }
 
-        #canvas-stars { position: fixed; top: 0; left: 0; z-index: 1; }
+        /* Fixed background stars - set to lowest layer */
+        #canvas-stars { position: fixed; top: 0; left: 0; z-index: 1; pointer-events: none; }
 
+        /* Unlock screen - set to HIGHEST layer */
         .unlock-screen {
-            position: fixed; inset: 0; z-index: 100;
+            position: fixed; inset: 0; z-index: 9999;
             display: flex; flex-direction: column; align-items: center; justify-content: center;
             background: radial-gradient(circle, #1a0a1a 0%, #050505 100%);
             transition: opacity 1s ease;
@@ -26,8 +28,11 @@
         }
 
         .heart-lock {
-            font-size: 80px; animation: heartbeat 1.2s infinite;
-            filter: drop-shadow(0 0 20px #ff4d6d);
+            font-size: 100px; 
+            animation: heartbeat 1.2s infinite;
+            filter: drop-shadow(0 0 30px #ff4d6d);
+            user-select: none;
+            pointer-events: auto; /* Ensures it can be clicked */
         }
 
         @keyframes heartbeat {
@@ -91,7 +96,7 @@
 
     <div class="unlock-screen" id="unlockScreen" onclick="startExperience()">
         <div class="heart-lock">❤️</div>
-        <p style="margin-top: 20px; letter-spacing: 3px;">TAP TO UNLOCK MY PROMISE</p>
+        <p style="margin-top: 20px; letter-spacing: 3px; font-size: 14px;">CLICK THE HEART TO UNLOCK MY PROMISE</p>
     </div>
 
     <div class="main-content" id="mainContent">
@@ -112,7 +117,6 @@
     </div>
 
     <script>
-        // Starfield
         const canvas = document.getElementById('canvas-stars');
         const ctx = canvas.getContext('2d');
         canvas.width = window.innerWidth;
@@ -136,14 +140,25 @@
         drawStars();
 
         function startExperience() {
-            document.getElementById('unlockScreen').style.opacity = '0';
+            // Immediately start fading the unlock screen
+            const unlock = document.getElementById('unlockScreen');
+            unlock.style.pointerEvents = 'none'; 
+            unlock.style.opacity = '0';
+            
             setTimeout(() => {
-                document.getElementById('unlockScreen').style.display = 'none';
-                document.getElementById('mainContent').style.display = 'flex';
-                // Trigger Mustang
-                setTimeout(() => { document.getElementById('mustang').style.left = '110%'; }, 500);
-                // Trigger Message
-                setTimeout(() => { document.getElementById('msgBox').classList.add('show'); }, 1500);
+                unlock.style.display = 'none';
+                const content = document.getElementById('mainContent');
+                content.style.display = 'flex';
+                
+                // Trigger Mustang Drive
+                setTimeout(() => { 
+                    document.getElementById('mustang').style.left = '110%'; 
+                }, 500);
+                
+                // Trigger Message Appearance
+                setTimeout(() => { 
+                    document.getElementById('msgBox').classList.add('show'); 
+                }, 1500);
             }, 1000);
         }
 
