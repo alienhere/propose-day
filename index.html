@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>For My Jaanu Badmas</title>
+    <title>Promise Day - For My Jaanu Badmas</title>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;600&display=swap');
@@ -40,9 +40,9 @@
 
         .main-content {
             display: none; position: relative; z-index: 10;
-            height: 100vh; display: flex; flex-direction: column;
-            align-items: center; justify-content: center; text-align: center;
-            padding: 20px;
+            height: 100vh; width: 100%;
+            flex-direction: column; align-items: center; justify-content: center;
+            text-align: center;
         }
 
         .himalaya-silhouette {
@@ -52,32 +52,33 @@
         }
 
         .mustang-drive {
-            position: absolute; bottom: 5vh; left: -200px; width: 120px;
-            z-index: 3; transition: left 6s linear; /* Faster drive */
+            position: absolute; bottom: 8vh; left: -200px; width: 100px;
+            z-index: 3; transition: left 6s linear;
         }
 
         .message-box {
             background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            padding: 40px; border-radius: 30px;
+            backdrop-filter: blur(15px);
+            padding: 30px; border-radius: 30px;
             border: 1px solid rgba(255, 255, 255, 0.2);
-            max-width: 600px; box-shadow: 0 0 40px rgba(255, 77, 109, 0.3);
+            max-width: 85%; box-shadow: 0 0 40px rgba(255, 77, 109, 0.3);
             opacity: 0; transform: translateY(30px);
             transition: all 1.5s ease;
+            z-index: 10;
         }
 
         .message-box.show { opacity: 1; transform: translateY(0); }
 
-        h2 { font-family: 'Dancing Script', cursive; font-size: 2.5rem; color: #ff4d6d; margin-bottom: 20px; }
-        p { font-size: 1.1rem; line-height: 1.8; letter-spacing: 1px; color: #f0f0f0; }
+        h2 { font-family: 'Dancing Script', cursive; font-size: 2.2rem; color: #ff4d6d; margin-bottom: 15px; }
+        p { font-size: 1rem; line-height: 1.6; color: #f0f0f0; margin: 0; }
 
         .final-question {
-            margin-top: 30px; font-weight: 600; font-size: 1.4rem;
+            margin-top: 25px; font-weight: 600; font-size: 1.2rem;
             color: #ffd700; text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
         }
 
         .btn-yes {
-            margin-top: 25px; padding: 15px 40px; font-size: 1.2rem;
+            margin-top: 20px; padding: 12px 35px; font-size: 1.1rem;
             background: #ff4d6d; color: white; border: none;
             border-radius: 50px; cursor: pointer; font-weight: bold;
             box-shadow: 0 0 20px #ff4d6d; transition: 0.3s;
@@ -90,5 +91,75 @@
 
     <div class="unlock-screen" id="unlockScreen" onclick="startExperience()">
         <div class="heart-lock">❤️</div>
-        <p style="margin-top: 20px; letter-spacing: 3px;">TAP TO UNLOCK MY HEART</p>
+        <p style="margin-top: 20px; letter-spacing: 3px;">TAP TO UNLOCK MY PROMISE</p>
     </div>
+
+    <div class="main-content" id="mainContent">
+        <div class="himalaya-silhouette"></div>
+        <img src="https://img.icons8.com/color/96/ford-mustang.png" class="mustang-drive" id="mustang">
+
+        <div class="message-box" id="msgBox">
+            <h2>Prisha, Meri Jaanu Badmas...</h2>
+            <p>
+                Meri jaan tu meri zindagi mera pyaar mera dil hai tu, humesha im there for you standing with you all the time and supporting you no matter what.<br><br>
+                Mera pyaar humeshaaa tere paas hai and youre my valentine for life my love for life for every janam...
+            </p>
+            <div class="final-question">
+                I PROMISE TO BE YOURS FOREVER.<br>WILL YOU BE MY MAALKIN FOR EVERYYYYY JANAM?
+            </div>
+            <button class="btn-yes" onclick="celebrate()">YES, I PROMISE! ❤️</button>
+        </div>
+    </div>
+
+    <script>
+        // Starfield
+        const canvas = document.getElementById('canvas-stars');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        const stars = Array.from({ length: 150 }, () => ({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            size: Math.random() * 2,
+            speed: Math.random() * 0.5
+        }));
+
+        function drawStars() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = "white";
+            stars.forEach(s => {
+                ctx.beginPath(); ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2); ctx.fill();
+                s.y -= s.speed; if (s.y < 0) s.y = canvas.height;
+            });
+            requestAnimationFrame(drawStars);
+        }
+        drawStars();
+
+        function startExperience() {
+            document.getElementById('unlockScreen').style.opacity = '0';
+            setTimeout(() => {
+                document.getElementById('unlockScreen').style.display = 'none';
+                document.getElementById('mainContent').style.display = 'flex';
+                // Trigger Mustang
+                setTimeout(() => { document.getElementById('mustang').style.left = '110%'; }, 500);
+                // Trigger Message
+                setTimeout(() => { document.getElementById('msgBox').classList.add('show'); }, 1500);
+            }, 1000);
+        }
+
+        function celebrate() {
+            confetti({ particleCount: 400, spread: 100, origin: { y: 0.6 } });
+            document.querySelector('h2').innerText = "Vada Raha, Prisha! ❤️";
+            document.querySelector('.final-question').innerHTML = "HAPPY PROMISE DAY MERI MAALKIN!<br>💍✨";
+            document.querySelector('.btn-yes').style.display = 'none';
+            
+            const subText = document.createElement('p');
+            subText.innerText = "YAYAYYA THANKYOU MAALKIN ❤️";
+            subText.style.color = "#ff4d6d";
+            subText.style.fontSize = "1.2rem";
+            subText.style.marginTop = "15px";
+            document.getElementById('msgBox').appendChild(subText);
+        }
+    </script>
+</body>
+</html>
